@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ACANLAR MOBİLYA DEKORASYON - Fiyat Teklif Programı</title>
+<style>
+:root {
+  --red: #b90000;
+  --dark: #1e2430;
+  --bg: #f3f5f9;
+  --card: #ffffff;
+  --muted: #64748b;
+  --border: #cbd5e1;
+  --accent: #f8fafc;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); font-family: 'Segoe UI', system-ui, Arial, sans-serif; color: #1e293b; }
+button, input, select, textarea { font: inherit; }
+
+/* HEADER */
+.header { background: linear-gradient(135deg, #181d27, #2c3545); color: white; padding: 14px 20px; box-shadow: 0 4px 20px #0002; }
+.header-inner { max-width: 1200px; margin: auto; display: flex; align-items: center; gap: 16px; }
+.logo-container { width: 75px; height: 75px; background: white; border-radius: 12px; padding: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo { max-width: 100%; max-height: 100%; object-fit: contain; }
+.brand h1 { margin: 0; font-size: 20px; letter-spacing: 0.5px; font-weight: 800; line-height: 1.2; }
+.brand p { margin: 4px 0 0; color: #cbd5e1; font-size: 12px; }
+
+.wrap { max-width: 1200px; margin: 20px auto; padding: 0 14px; display: flex; flex-direction: column; gap: 18px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px #00000008; }
+.card h2 { margin: 0 0 16px; font-size: 18px; display: flex; align-items: center; justify-content: space-between; color: var(--dark); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+
+/* FORM FIELDS & MOBİL UYUM */
+.fields { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.field label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; background: #fff; transition: 0.15s; font-size: 15px; }
+input:focus, select:focus { border-color: var(--red); box-shadow: 0 0 0 3px #b9000015; }
+
+.item-box { border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 14px; background: #fff; transition: 0.2s; position: relative; }
+.item-box:hover { border-color: #94a3b8; box-shadow: 0 6px 16px #0000000c; }
+.item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #e2e8f0; }
+.item-no { font-weight: 800; font-size: 15px; color: var(--red); display: flex; align-items: center; gap: 6px; }
+
+/* DONANIM KARTLARI */
+.feature-group { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; background: #f8fafc; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; }
+
+/* COUNTER (1'ER 1'ER ARTTIRMA BUTONLARI) */
+.counter-box { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.btn-counter { width: 42px; height: 42px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-size: 20px; font-weight: 800; color: var(--dark); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; user-select: none; }
+.btn-counter:active { background: #e2e8f0; transform: scale(0.96); }
+.counter-val { flex: 1; text-align: center; font-size: 16px; font-weight: 800; border: 1px solid #cbd5e1; border-radius: 10px; padding: 8px 0; background: #fff; }
+
+.check-card { display: flex; align-items: center; gap: 10px; background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid #cbd5e1; cursor: pointer; font-weight: 600; font-size: 13px; height: 42px; margin-top: 4px; }
+.check-card input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--red); cursor: pointer; }
+
+/* BUTTONS */
+.btn { border: 0; border-radius: 10px; padding: 12px 18px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; transition: 0.15s; }
+.btn-primary { background: var(--red); color: #fff; }
+.btn-primary:hover { background: #990000; }
+.btn-dark { background: var(--dark); color: #fff; }
+.btn-dark:hover { background: #0f131a; }
+.btn-light { background: #e2e8f0; color: #334155; }
+.btn-danger { background: #fef2f2; color: #b90000; border: 1px solid #fecaca; padding: 8px 14px; font-size: 13px; }
+
+/* MÜŞTERİ PANELİ (SÜRGÜLÜ DRAWER) */
+.panel-drawer { position: fixed; left: 0; bottom: 0; width: 100%; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -10px 40px #0003; z-index: 1002; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); padding: 20px; max-height: 85vh; overflow-y: auto; }
+.panel-drawer.open { transform: translateY(0); }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1001; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.overlay.open { opacity: 1; pointer-events: auto; }
+
+/* ÖZET TABLOSU */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.summary-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.summary-card label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+.summary-card .val { font-size: 16px; font-weight: 800; color: var(--dark); margin-top: 4px; }
+
+.total-box { background: linear-gradient(135deg, #1e2430, #0f172a); color: #fff; border-radius: 14px; padding: 18px; text-align: right; }
+.total-box label { color: #94a3b8; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.total-box .total { font-size: 32px; font-weight: 900; color: #4ade80; margin-top: 2px; }
+
+/* AYARLAR FAB */
+.settings-fab { position: fixed; right: 16px; top: 16px; z-index: 1000; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fff; color: #1e293b; box-shadow: 0 4px 18px #0003; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+.settings-drawer { position: fixed; right: 16px; top: 70px; width: min(380px, calc(100vw - 32px)); max-height: calc(100vh - 90px); background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 16px 48px #0003; z-index: 1000; transform: translateX(calc(100% + 40px)); opacity: 0; pointer-events: none; transition: .25s ease; overflow: auto; }
+.settings-drawer.open { transform: translateX(0); opacity: 1; pointer-events: auto; }
+.drawer-head { padding: 16px; border-bottom: 1px solid var(--border); }
+.drawer-head > div:first-child { display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 800; }
+.drawer-close { border: 0; background: #f1f5f9; border-radius: 8px; width: 32px; height: 32px; font-size: 20px; cursor: pointer; }
+.drawer-body { padding: 16px; }
+.price-row { display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center; margin-bottom: 10px; font-size: 13px; font-weight: 600; }
+
+/* 🖨️ A4 TEKLİF FORMU ÇIKTI TASARIMI */
+.quote-print-form { display: none; background: #fff; padding: 0; color: #1e293b; }
+
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .no-print, .settings-fab, .settings-drawer, .header, .wrap > section:not(.quote-print-form), .panel-drawer, .overlay { display: none !important; }
+  .wrap { margin: 0; padding: 0; max-width: 100%; }
+  .quote-print-form { display: block !important; border: none; box-shadow: none; padding: 0; }
+  @page { size: A4; margin: 10mm; }
+}
+
+.pf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--red); padding-bottom: 12px; margin-bottom: 16px; }
+.pf-brand { display: flex; align-items: center; gap: 14px; }
+.pf-logo-box { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; }
+.pf-logo { max-width: 100%; max-height: 100%; object-fit: contain; }
+.pf-title h2 { margin: 0; font-size: 18px; font-weight: 900; color: #0f172a; }
+.pf-title p { margin: 2px 0 0; font-size: 11px; color: #475569; }
+.pf-meta { text-align: right; font-size: 11px; color: #334155; }
+
+.pf-customer { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 12px; }
+
+.pf-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 11px; }
+.pf-table th { background: #1e2430; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+.pf-table td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; }
+.pf-table tr:nth-child(even) { background: #f8fafc; }
+
+.pf-summary { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; }
+.pf-notes { flex: 1; font-size: 10px; color: #64748b; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; }
+.pf-notes ul { margin: 4px 0 0 14px; padding: 0; }
+.pf-totals { width: 260px; font-size: 11px; }
+.pf-totals-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
+.pf-totals-row.grand { border-bottom: none; border-top: 2px solid #0f172a; font-weight: 900; font-size: 14px; color: var(--red); padding-top: 6px; margin-top: 4px; }
+
+.pf-footer { margin-top: 35px; display: flex; justify-content: space-between; text-align: center; font-size: 11px; }
+.pf-sign { width: 180px; border-top: 1px solid #000; padding-top: 5px; font-weight: 700; }
+
+@media(max-width: 850px) {
+  .fields { grid-template-columns: 1fr 1fr; }
+  .feature-group { grid-template-columns: 1fr; }
+}
+@media(max-width: 500px) {
+  .fields { grid-template-columns: 1fr; }
+  .brand h1 { font-size: 16px; }
+  .logo-container { width: 60px; height: 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- MASAÜSTÜ / MOBİL HEADER -->
+<header class="header no-print">
+  <div class="header-inner">
+    <div class="logo-container">
+      <img class="logo" src="logo.jpg" alt="ACANLAR MOBİLYA">
+    </div>
+    <div class="brand">
+      <h1>ACANLAR MOBİLYA DEKORASYON</h1>
+      <p>Fiyat Teklif & Hesaplama Programı</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- MÜŞTERİ BİLGİLERİ DÜĞMESİ (SÜRGÜLÜ ALAN) -->
+  <section class="card no-print" style="background: #f8fafc; border-color: #cbd5e1;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <strong style="font-size:15px; color:var(--dark);">👤 Müşteri & Proje Detayları</strong>
+        <p style="margin:2px 0 0 0; font-size:12px; color:var(--muted);" id="customerSummaryText">Henüz müşteri bilgisi girilmedi (Opsiyonel)</p>
+      </div>
+      <button class="btn btn-dark" onclick="toggleCustomerPanel(true)">✏️ Müşteri Bilgisi Gir / Düzenle</button>
+    </div>
+  </section>
+
+  <!-- 1. MOBİLYA BİLGİLERİ -->
+  <section class="card no-print">
+    <div class="item-head">
+      <h2 style="border:none; padding:0; margin:0;">📐 Mobilya Kalemleri</h2>
+      <button class="btn btn-primary" onclick="addItem()">＋ Yeni Mobilya Ekle</button>
+    </div>
+    <div id="items"></div>
+  </section>
+
+  <!-- 2. HESAPLANAN FİYAT DETAYLARI -->
+  <section class="card no-print">
+    <h2 style="border:none; padding:0; margin:0 0 16px 0;">💰 Fiyat Teklifi Özeti</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <label>Toplam İmalat Alanı</label>
+        <div class="val" id="totalArea">0,00 m²</div>
+      </div>
+      <div class="summary-card">
+        <label>Net Malzeme Tutar</label>
+        <div class="val" id="totalMaterial">0,00 TL</div>
+      </div>
+      <div class="summary-card">
+        <label>Çekmece Bedelleri</label>
+        <div class="val" id="totalDrawers">0,00 TL</div>
+      </div>
+      <div class="summary-card">
+        <label>Sürgü Kapak Bedelleri</label>
+        <div class="val" id="totalSliding">0,00 TL</div>
+      </div>
+      <div class="summary-card">
+        <label>Cam / Ayna Kapak Bedelleri</label>
+        <div class="val" id="totalGlass">0,00 TL</div>
+      </div>
+    </div>
+
+    <div class="total-box" style="margin-top:16px;">
+      <label>GENEL TEKLİF TUTARI</label>
+      <div class="total" id="grandTotal">0,00 TL</div>
+    </div>
+  </section>
+
+  <!-- İŞLEM BUTONLARI -->
+  <section class="card no-print">
+    <div class="actions">
+      <button class="btn btn-primary" style="flex:1" onclick="preparePrintAndPrint()">🖨️ Form Olarak Yazdır / PDF İndir</button>
+      <button class="btn btn-dark" onclick="newQuote()">＋ Sıfırla / Yeni Teklif</button>
+    </div>
+  </section>
+
+  <!-- 3. 🖨️ A4 YAZDIRILABİLİR MÜŞTERİ TEKLİF FORMU -->
+  <section class="card quote-print-form" id="printSection">
+    <div class="pf-header">
+      <div class="pf-brand">
+        <div class="pf-logo-box">
+          <img class="pf-logo" src="logo.jpg" alt="ACANLAR">
+        </div>
+        <div class="pf-title">
+          <h2>ACANLAR MOBİLYA DEKORASYON</h2>
+          <p>Özel İmalat, Tasarım & Dekorasyon Hizmetleri</p>
+        </div>
+      </div>
+      <div class="pf-meta">
+        <div><strong>Teklif Tarihi:</strong> <span id="pfDate">24.09.2026</span></div>
+        <div><strong>Teklif No:</strong> #ACN-<span id="pfNo">1042</span></div>
+      </div>
+    </div>
+
+    <!-- MÜŞTERİ BİLGİ ALANI -->
+    <div class="pf-customer">
+      <div><strong>Sayın / Müşteri:</strong> <span id="pfCustomerName">Müşteri Belirtilmedi</span></div>
+      <div><strong>Telefon:</strong> <span id="pfCustomerPhone">-</span></div>
+      <div><strong>Proje / Konum:</strong> <span id="pfCustomerProject">Genel Mobilya İmalatı</span></div>
+      <div><strong>Açıklama:</strong> <span id="pfCustomerNotes">-</span></div>
+    </div>
+
+    <!-- KALEM DETAY TABLOSU -->
+    <table class="pf-table">
+      <thead>
+        <tr>
+          <th style="width:5%">#</th>
+          <th style="width:25%">Mobilya Kalemi</th>
+          <th style="width:15%">Malzeme</th>
+          <th style="width:15%">Ölçü (En×Boy)</th>
+          <th style="width:8%">Adet</th>
+          <th style="width:17%">Ekstra Özellikler</th>
+          <th style="width:15%;text-align:right">Tutar</th>
+        </tr>
+      </thead>
+      <tbody id="pfTableBody">
+        <!-- JS ile doldurulacak -->
+      </tbody>
+    </table>
+
+    <!-- ÖZET VE ŞARTLAR -->
+    <div class="pf-summary">
+      <div class="pf-notes">
+        <strong>Teklif Şartları & Açıklama:</strong>
+        <ul>
+          <li>Fiyatlarımıza nakliye ve montaj dahildir.</li>
+          <li>Teklifimiz düzenlenme tarihinden itibaren 15 gün geçerlidir.</li>
+          <li>Üretim onaylanan imalat ölçülerine göre yapılacaktır.</li>
+        </ul>
+      </div>
+      <div class="pf-totals">
+        <div class="pf-totals-row"><span>Toplam İmalat Alanı:</span><span id="pfArea">0 m²</span></div>
+        <div class="pf-totals-row"><span>Net Malzeme Tutar:</span><span id="pfMatTotal">0 TL</span></div>
+        <div class="pf-totals-row"><span>Donanım Ekstraları:</span><span id="pfExtraTotal">0 TL</span></div>
+        <div class="pf-totals-row grand"><span>GENEL TOPLAM:</span><span id="pfGrandTotal">0 TL</span></div>
+      </div>
+    </div>
+
+    <div class="pf-footer">
+      <div class="pf-sign">ACANLAR MOBİLYA<br>(Kaşe / İmza)</div>
+      <div class="pf-sign">MÜŞTERİ ONAYI<br>(Ad Soyad / İmza)</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- SÜRGÜLÜ MÜŞTERİ BİLGİ PANELİ (DRAWER) -->
+<div class="overlay" id="overlay" onclick="toggleCustomerPanel(false)"></div>
+<div class="panel-drawer" id="customerPanel">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <strong style="font-size:17px; color:var(--dark);">👤 Müşteri & Proje Bilgileri</strong>
+    <button class="drawer-close" onclick="toggleCustomerPanel(false)">×</button>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+    <div><label style="font-size:12px; font-weight:700; color:var(--muted);">Müşteri Adı Soyadı</label><input type="text" id="custName" placeholder="Ahmet Yılmaz" oninput="updateCustomerSummary()"></div>
+    <div><label style="font-size:12px; font-weight:700; color:var(--muted);">Telefon Numarası</label><input type="text" id="custPhone" placeholder="0532 ..." oninput="updateCustomerSummary()"></div>
+    <div style="grid-column: 1/-1;"><label style="font-size:12px; font-weight:700; color:var(--muted);">Proje / Adres Bilgisi</label><input type="text" id="custProject" placeholder="Atakum Villa Mutfak İmalatı" oninput="updateCustomerSummary()"></div>
+    <div style="grid-column: 1/-1;"><label style="font-size:12px; font-weight:700; color:var(--muted);">Özel Notlar (Teklifte Görünür)</label><input type="text" id="custNotes" placeholder="Montaj tarihi vb." oninput="updateCustomerSummary()"></div>
+  </div>
+  <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="toggleCustomerPanel(false)">Kaydet & Kapat</button>
+</div>
+
+<!-- AYARLAR BUTONU VE SÜRGÜLÜ PANELİ -->
+<button class="settings-fab no-print" onclick="toggleSettings()" title="Birim Fiyat Ayarları">⚙️</button>
+
+<div id="settingsDrawer" class="settings-drawer no-print">
+  <div class="drawer-head">
+    <div><strong>⚙️ Birim Fiyat Ayarları</strong><button class="drawer-close" onclick="toggleSettings()">×</button></div>
+    <div style="font-size:12px; color:var(--muted); margin-top:4px;">m² Fiyatları ve Donanım Bedelleri</div>
+  </div>
+  <div class="drawer-body">
+    <h4 style="margin:0 0 10px 0; color:var(--dark);">Malzeme m² Fiyatları</h4>
+    <div id="priceSettings"></div>
+
+    <h4 style="margin:16px 0 10px 0; color:var(--dark);">Donanım Ekstra Fiyatları</h4>
+    <div class="price-row"><strong>Çekmece (Adet)</strong><input id="drawerPrice" type="number" min="0" value="2000"></div>
+    <div class="price-row"><strong>Sürgü Kapak (Modül)</strong><input id="slidingPrice" type="number" min="0" value="7500"></div>
+    <div class="price-row"><strong>Cam / Ayna Kapak (Adet)</strong><input id="glassPrice" type="number" min="0" value="1500"></div>
+
+    <div class="actions" style="margin-top:20px;">
+      <button class="btn btn-dark" style="width:100%;" onclick="savePrices()">💾 Fiyatları Kaydet</button>
+      <button class="btn btn-light" style="width:100%;" onclick="resetPrices()">Varsayılana Dön</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_PRICES = {
+  "Suntalam": 8000,
+  "MDF": 9000,
+  "Membran": 10000,
+  "Akrilik": 11000,
+  "Alüminyum": 12000
+};
+const DEFAULT_SETTINGS = { drawerPrice: 2000, slidingPrice: 7500, glassPrice: 1500 };
+
+let prices = JSON.parse(localStorage.getItem("acanlar_prices") || "null") || {...DEFAULT_PRICES};
+let settings = JSON.parse(localStorage.getItem("acanlar_settings") || "null") || {...DEFAULT_SETTINGS};
+let itemCount = 0;
+
+function money(n) {
+  return new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY", maximumFractionDigits: 0 }).format(n || 0);
+}
+
+// MOBİLYA KALEMİ EKLEME
+function addItem(data = {}) {
+  itemCount++;
+  const id = itemCount;
+  const el = document.createElement("div");
+  el.className = "item-box";
+  el.id = "item-" + id;
+  const options = Object.keys(prices).map(p => `<option value="${p}" ${(data.material || "Suntalam") === p ? "selected" : ""}>${p}</option>`).join("");
+
+  el.innerHTML = `
+    <div class="item-head">
+      <div class="item-no">📦 Mobilya Kalemi #${id}</div>
+      <button class="btn btn-danger no-print" onclick="removeItem(${id})">Sil</button>
+    </div>
+    <div class="fields">
+      <div class="field"><label>Mobilya Tanımı</label><input class="iname" placeholder="Örn: Gardırop, Portmanto" value="${data.name || ""}" oninput="calculate()"></div>
+      <div class="field"><label>Malzeme Türü</label><select class="material" onchange="calculate()">${options}</select></div>
+      <div class="field"><label>En (cm)</label><input class="width" type="number" min="0" step="0.1" value="${data.width || ""}" placeholder="200" oninput="calculate()"></div>
+      <div class="field"><label>Boy (cm)</label><input class="height" type="number" min="0" step="0.1" value="${data.height || ""}" placeholder="250" oninput="calculate()"></div>
+      <div class="field"><label>Adet</label><input class="qty" type="number" min="1" step="1" value="${data.qty || 1}" oninput="calculate()"></div>
+
+      <!-- DONANIM EKSTRALARI (+1 / -1 ARTTIRMALI) -->
+      <div class="feature-group">
+        <div class="field" style="margin:0">
+          <label>🗄️ Çekmece (${money(settings.drawerPrice)}/ad)</label>
+          <div class="counter-box">
+            <button class="btn-counter" onclick="changeCounter(${id}, 'drawers', -1)">−</button>
+            <div class="counter-val" id="drawers-val-${id}">0</div>
+            <button class="btn-counter" onclick="changeCounter(${id}, 'drawers', 1)">＋</button>
+          </div>
+          <input type="hidden" class="drawers" value="${data.drawers || 0}">
+        </div>
+
+        <div class="field" style="margin:0">
+          <label>🪞 Cam/Ayna Kapak (${money(settings.glassPrice)}/ad)</label>
+          <div class="counter-box">
+            <button class="btn-counter" onclick="changeCounter(${id}, 'glass', -1)">−</button>
+            <div class="counter-val" id="glass-val-${id}">0</div>
+            <button class="btn-counter" onclick="changeCounter(${id}, 'glass', 1)">＋</button>
+          </div>
+          <input type="hidden" class="glass" value="${data.glass || 0}">
+        </div>
+
+        <div class="field" style="margin:0; display:flex; flex-direction:column; justify-content:flex-end;">
+          <label style="visibility:hidden">Sürgü</label>
+          <label class="check-card">
+            <input class="sliding" type="checkbox" ${data.sliding ? "checked" : ""} onchange="calculate()"> 
+            <span>🚪 Sürgü Kapak (+${money(settings.slidingPrice)})</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field" style="grid-column: 1 / -1;"><label>Kalem Toplam Tutarı</label><input class="result" style="font-weight:800;color:var(--red);font-size:16px" readonly value="0 TL"></div>
+    </div>`;
+
+  document.getElementById("items").appendChild(el);
+  calculate();
+}
+
+function changeCounter(id, type, delta) {
+  const item = document.getElementById("item-" + id);
+  if (!item) return;
+  const input = item.querySelector("." + type);
+  const valDisplay = item.querySelector(`#${type}-val-${id}`);
+  let current = parseInt(input.value) || 0;
+  current = Math.max(0, current + delta);
+  input.value = current;
+  valDisplay.textContent = current;
+  calculate();
+}
+
+function removeItem(id) {
+  document.getElementById("item-" + id)?.remove();
+  calculate();
+}
+
+// MÜŞTERİ PANELİNİ AÇ / KAPAT
+function toggleCustomerPanel(open) {
+  document.getElementById("customerPanel").classList.toggle("open", open);
+  document.getElementById("overlay").classList.toggle("open", open);
+}
+
+function updateCustomerSummary() {
+  const name = document.getElementById("custName").value.trim();
+  const project = document.getElementById("custProject").value.trim();
+  const txt = name ? `${name} ${project ? ' (' + project + ')' : ''}` : "Henüz müşteri bilgisi girilmedi (Opsiyonel)";
+  document.getElementById("customerSummaryText").textContent = txt;
+}
+
+// HESAPLAMA MOTORU
+function calculate() {
+  let area = 0, materialTotal = 0, drawerTotalSum = 0, slidingTotalSum = 0, glassTotalSum = 0;
+  const printItems = [];
+
+  document.querySelectorAll(".item-box").forEach((el, i) => {
+    const name = el.querySelector(".iname").value || ("Mobilya Kalemi " + (i + 1));
+    const mat = el.querySelector(".material").value;
+    const w = parseFloat(el.querySelector(".width").value) || 0;
+    const h = parseFloat(el.querySelector(".height").value) || 0;
+    const q = Math.max(1, parseInt(el.querySelector(".qty").value) || 1);
+    const drawers = Math.max(0, parseInt(el.querySelector(".drawers").value) || 0);
+    const glass = Math.max(0, parseInt(el.querySelector(".glass").value) || 0);
+    const isSliding = el.querySelector(".sliding").checked;
+
+    const itemArea = (w * h / 10000) * q;
+    const matSubtotal = itemArea * (prices[mat] || 0);
+    const drawerSubtotal = drawers * (settings.drawerPrice || 0);
+    const glassSubtotal = glass * (settings.glassPrice || 0);
+    const slidingSubtotal = isSliding ? (settings.slidingPrice || 0) : 0;
+
+    const finalItemTotal = matSubtotal + drawerSubtotal + glassSubtotal + slidingSubtotal;
+
+    area += itemArea;
+    materialTotal += matSubtotal;
+    drawerTotalSum += drawerSubtotal;
+    glassTotalSum += glassSubtotal;
+    slidingTotalSum += slidingSubtotal;
+
+    el.querySelector(".result").value = money(finalItemTotal);
+
+    printItems.push({
+      id: i + 1, name, mat, w, h, q, itemArea,
+      drawers, glass, isSliding,
+      matSubtotal, drawerSubtotal, glassSubtotal, slidingSubtotal,
+      finalItemTotal
+    });
+  });
+
+  const grandTotal = materialTotal + drawerTotalSum + slidingTotalSum + glassTotalSum;
+
+  document.getElementById("totalArea").textContent = area.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " m²";
+  document.getElementById("totalMaterial").textContent = money(materialTotal);
+  document.getElementById("totalDrawers").textContent = money(drawerTotalSum);
+  document.getElementById("totalSliding").textContent = money(slidingTotalSum);
+  document.getElementById("totalGlass").textContent = money(glassTotalSum);
+  document.getElementById("grandTotal").textContent = money(grandTotal);
+
+  updatePrintTable(printItems, area, materialTotal, (drawerTotalSum + slidingTotalSum + glassTotalSum), grandTotal);
+}
+
+// 🖨️ YAZDIRILACAK TEKLİF FORMUNU DOLDURUR
+function updatePrintTable(items, area, matTotal, extraTotal, grandTotal) {
+  const tbody = document.getElementById("pfTableBody");
+  tbody.innerHTML = items.map(x => {
+    let extras = [];
+    if (x.drawers > 0) extras.push(`${x.drawers} Çekmece`);
+    if (x.glass > 0) extras.push(`${x.glass} Cam/Ayna`);
+    if (x.isSliding) extras.push(`Sürgü Kapak`);
+
+    return `
+      <tr>
+        <td>${x.id}</td>
+        <td><strong>${x.name}</strong></td>
+        <td>${x.mat}</td>
+        <td>${x.w}×${x.h} cm</td>
+        <td>${x.q} ad.</td>
+        <td>${extras.length > 0 ? extras.join(", ") : "-"}</td>
+        <td style="text-align:right;font-weight:700">${money(x.finalItemTotal)}</td>
+      </tr>`;
+  }).join("");
+
+  document.getElementById("pfArea").textContent = area.toFixed(2) + " m²";
+  document.getElementById("pfMatTotal").textContent = money(matTotal);
+  document.getElementById("pfExtraTotal").textContent = money(extraTotal);
+  document.getElementById("pfGrandTotal").textContent = money(grandTotal);
+
+  // Müşteri bilgileri aktarımı
+  document.getElementById("pfCustomerName").textContent = document.getElementById("custName").value.trim() || "Müşteri Belirtilmedi";
+  document.getElementById("pfCustomerPhone").textContent = document.getElementById("custPhone").value.trim() || "-";
+  document.getElementById("pfCustomerProject").textContent = document.getElementById("custProject").value.trim() || "Genel Mobilya İmalatı";
+  document.getElementById("pfCustomerNotes").textContent = document.getElementById("custNotes").value.trim() || "-";
+
+  const today = new Date();
+  document.getElementById("pfDate").textContent = today.toLocaleDateString("tr-TR");
+  document.getElementById("pfNo").textContent = Math.floor(1000 + Math.random() * 9000);
+}
+
+function preparePrintAndPrint() {
+  calculate();
+  window.print();
+}
+
+function renderPriceSettings() {
+  document.getElementById("priceSettings").innerHTML = Object.keys(prices).map(k => `
+    <div class="price-row"><strong>${k} (m²)</strong><input type="number" min="0" value="${prices[k]}" data-price="${k}"></div>`).join("");
+  document.getElementById("drawerPrice").value = settings.drawerPrice;
+  document.getElementById("slidingPrice").value = settings.slidingPrice;
+  document.getElementById("glassPrice").value = settings.glassPrice || 1500;
+}
+
+function savePrices() {
+  document.querySelectorAll("[data-price]").forEach(i => prices[i.dataset.price] = parseFloat(i.value) || 0);
+  settings.drawerPrice = parseFloat(document.getElementById("drawerPrice").value) || 0;
+  settings.slidingPrice = parseFloat(document.getElementById("slidingPrice").value) || 0;
+  settings.glassPrice = parseFloat(document.getElementById("glassPrice").value) || 0;
+
+  localStorage.setItem("acanlar_prices", JSON.stringify(prices));
+  localStorage.setItem("acanlar_settings", JSON.stringify(settings));
+
+  document.querySelectorAll(".material").forEach(s => {
+    const current = s.value;
+    s.innerHTML = Object.keys(prices).map(p => `<option value="${p}" ${p === current ? "selected" : ""}>${p}</option>`).join("");
+  });
+
+  calculate();
+  toggleSettings(false);
+}
+
+function resetPrices() {
+  prices = { ...DEFAULT_PRICES };
+  settings = { ...DEFAULT_SETTINGS };
+  localStorage.setItem("acanlar_prices", JSON.stringify(prices));
+  localStorage.setItem("acanlar_settings", JSON.stringify(settings));
+  renderPriceSettings();
+  calculate();
+}
+
+function toggleSettings(force) {
+  const drawer = document.getElementById("settingsDrawer");
+  const open = drawer.classList.contains("open");
+  const shouldOpen = typeof force === "boolean" ? force : !open;
+  drawer.classList.toggle("open", shouldOpen);
+}
+
+function newQuote() {
+  if (!confirm("Tüm kalemler ve müşteri bilgileri sıfırlanacak. Devam edilsin mi?")) return;
+  document.getElementById("items").innerHTML = "";
+  document.getElementById("custName").value = "";
+  document.getElementById("custPhone").value = "";
+  document.getElementById("custProject").value = "";
+  document.getElementById("custNotes").value = "";
+  updateCustomerSummary();
+  itemCount = 0;
+  addItem();
+}
+
+// İLK AÇILIŞ
+renderPriceSettings();
+addItem();
+</script>
+
+</body>
+</html>
